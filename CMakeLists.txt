@@ -6,4 +6,6 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(simple_paint main.cpp
         Shape.h
         Rectangle.cpp
-        Rectangle.h)
+        Rectangle.h
+        Board.cpp
+        Board.h)
