@@ -1,4 +1,5 @@
 #include "Circle.h"
+#include <sstream>
 #include <cmath>
 
 Circle::Circle(int centerX, int centerY, int radius)
@@ -14,18 +15,18 @@ void Circle::draw(char** board, int boardWidth, int boardHeight) const {
             board[centerY + y][centerX + x] = '*';
         if (centerX + y >= 0 && centerX + y < boardWidth && centerY + x >= 0 && centerY + x < boardHeight)
             board[centerY + x][centerX + y] = '*';
-        if (centerX - y >= 0 && centerX - y < boardWidth && centerY + x >= 0 && centerY + x < boardHeight)
-            board[centerY + x][centerX - y] = '*';
-        if (centerX - x >= 0 && centerX - x < boardWidth && centerY + y >= 0 && centerY + y < boardHeight)
-            board[centerY + y][centerX - x] = '*';
-        if (centerX - x >= 0 && centerX - x < boardWidth && centerY - y >= 0 && centerY - y < boardHeight)
-            board[centerY - y][centerX - x] = '*';
-        if (centerX - y >= 0 && centerX - y < boardWidth && centerY - x >= 0 && centerY - x < boardHeight)
-            board[centerY - x][centerX - y] = '*';
         if (centerX + y >= 0 && centerX + y < boardWidth && centerY - x >= 0 && centerY - x < boardHeight)
             board[centerY - x][centerX + y] = '*';
         if (centerX + x >= 0 && centerX + x < boardWidth && centerY - y >= 0 && centerY - y < boardHeight)
             board[centerY - y][centerX + x] = '*';
+        if (centerX - x >= 0 && centerX - x < boardWidth && centerY + y >= 0 && centerY + y < boardHeight)
+            board[centerY + y][centerX - x] = '*';
+        if (centerX - y >= 0 && centerX - y < boardWidth && centerY + x >= 0 && centerY + x < boardHeight)
+            board[centerY + x][centerX - y] = '*';
+        if (centerX - y >= 0 && centerX - y < boardWidth && centerY - x >= 0 && centerY - x < boardHeight)
+            board[centerY - x][centerX - y] = '*';
+        if (centerX - x >= 0 && centerX - x < boardWidth && centerY - y >= 0 && centerY - y < boardHeight)
+            board[centerY - y][centerX - x] = '*';
 
         if (err <= 0) {
             y += 1;
@@ -36,4 +37,16 @@ void Circle::draw(char** board, int boardWidth, int boardHeight) const {
             err -= 2 * x + 1;
         }
     }
+}
+
+std::string Circle::serialize() const {
+    std::ostringstream oss;
+    oss << "Circle " << centerX << " " << centerY << " " << radius;
+    return oss.str();
+}
+
+void Circle::deserialize(const std::string& data) {
+    std::istringstream iss(data);
+    std::string type;
+    iss >> type >> centerX >> centerY >> radius;
 }

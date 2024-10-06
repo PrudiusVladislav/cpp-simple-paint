@@ -1,4 +1,5 @@
 #include "Triangle.h"
+#include <sstream>
 
 Triangle::Triangle(int x, int y, int height)
     : x(x), y(y), height(height) {}
@@ -27,4 +28,16 @@ void Triangle::draw(char** board, int boardWidth, int boardHeight) const {
             board[baseY][baseX] = '*';
         }
     }
+}
+
+std::string Triangle::serialize() const {
+    std::ostringstream oss;
+    oss << "Triangle " << x << " " << y << " " << height;
+    return oss.str();
+}
+
+void Triangle::deserialize(const std::string& data) {
+    std::istringstream iss(data);
+    std::string type;
+    iss >> type >> x >> y >> height;
 }

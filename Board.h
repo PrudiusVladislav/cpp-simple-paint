@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <vector>
+#include <string>
 #include "Shape.h"
 
 class Board {
@@ -10,6 +11,8 @@ public:
     ~Board();
     void addShape(const Shape* shape);
     void draw() const;
+    void save(const std::string& filePath) const;
+    void load(const std::string& filePath);
 
 private:
     int width, height;

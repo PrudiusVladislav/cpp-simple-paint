@@ -1,4 +1,5 @@
 #include "Line.h"
+#include <sstream>
 #include <cmath>
 
 Line::Line(int x1, int y1, int x2, int y2)
@@ -29,4 +30,16 @@ void Line::draw(char** board, int boardWidth, int boardHeight) const {
             y += sy;
         }
     }
+}
+
+std::string Line::serialize() const {
+    std::ostringstream oss;
+    oss << "Line " << x1 << " " << y1 << " " << x2 << " " << y2;
+    return oss.str();
+}
+
+void Line::deserialize(const std::string& data) {
+    std::istringstream iss(data);
+    std::string type;
+    iss >> type >> x1 >> y1 >> x2 >> y2;
 }
