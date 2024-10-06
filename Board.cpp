@@ -25,6 +25,14 @@ Board::~Board() {
 
 void Board::addShape(const Shape* shape) {
     shapes.push_back(shape);
+    undoStack.clear(); // Clear the undo stack when a new shape is added
+}
+
+void Board::removeLastShape() {
+    if (!shapes.empty()) {
+        undoStack.push_back(shapes.back());
+        shapes.pop_back();
+    }
 }
 
 void Board::draw() const {
@@ -39,6 +47,12 @@ void Board::draw() const {
         }
         std::cout << std::endl;
     }
+}
+
+void Board::clear() {
+    shapes.clear();
+    undoStack.clear();
+    clearGrid();
 }
 
 void Board::clearGrid() const {
@@ -114,4 +128,8 @@ void Board::load(const std::string& filePath) {
     }
 
     inFile.close();
+}
+
+const std::vector<const Shape*>& Board::getShapes() const {
+    return shapes;
 }

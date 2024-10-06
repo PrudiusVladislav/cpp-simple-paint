@@ -14,4 +14,6 @@ add_executable(simple_paint main.cpp
         Circle.cpp
         Circle.h
         Triangle.cpp
-        Triangle.h)
+        Triangle.h
+        Api.cpp
+        Api.h)
