@@ -16,6 +16,7 @@ private:
     std::vector<const Shape*> shapes;
     char** grid;
     void clearGrid() const;
+    void drawBorder() const;
 };
 
 #endif // BOARD_H

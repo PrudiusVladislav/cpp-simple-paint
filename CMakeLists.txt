@@ -8,4 +8,8 @@ add_executable(simple_paint main.cpp
         Rectangle.cpp
         Rectangle.h
         Board.cpp
-        Board.h)
+        Board.h
+        Line.cpp
+        Line.h
+        Circle.cpp
+        Circle.h)
