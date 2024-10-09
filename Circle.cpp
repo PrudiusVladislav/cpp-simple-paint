@@ -50,3 +50,18 @@ void Circle::deserialize(const std::string& data) {
     std::string type;
     iss >> type >> centerX >> centerY >> radius;
 }
+
+Circle * Circle::CreateInternal(const std::vector<std::string> &args) {
+    if (args.size() != 3) {
+        return nullptr;
+    }
+
+    const int centerX = std::stoi(args[0]);
+    const int centerY = std::stoi(args[1]);
+    const int radius = std::stoi(args[2]);
+    return new Circle(centerX, centerY, radius);
+}
+
+Circle * Circle::CreateEmptyInternal() {
+    return new Circle(0, 0, 0);
+}

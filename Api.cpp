@@ -68,30 +68,24 @@ void Api::add(const std::vector<std::string>& args) {
     }
 
     const std::string& shapeType = args[0];
-    if (shapeType == "Rectangle" && args.size() == 5) {
-        int x = std::stoi(args[1]);
-        int y = std::stoi(args[2]);
-        int width = std::stoi(args[3]);
-        int height = std::stoi(args[4]);
-        board.addShape(new Rectangle(x, y, width, height));
-    } else if (shapeType == "Line" && args.size() == 5) {
-        int x1 = std::stoi(args[1]);
-        int y1 = std::stoi(args[2]);
-        int x2 = std::stoi(args[3]);
-        int y2 = std::stoi(args[4]);
-        board.addShape(new Line(x1, y1, x2, y2));
-    } else if (shapeType == "Circle" && args.size() == 4) {
-        int centerX = std::stoi(args[1]);
-        int centerY = std::stoi(args[2]);
-        int radius = std::stoi(args[3]);
-        board.addShape(new Circle(centerX, centerY, radius));
-    } else if (shapeType == "Triangle" && args.size() == 4) {
-        int x = std::stoi(args[1]);
-        int y = std::stoi(args[2]);
-        int height = std::stoi(args[3]);
-        board.addShape(new Triangle(x, y, height));
+    const std::vector shapeArgs(args.begin() + 1, args.end());
+    Shape* shape = nullptr;
+    if (shapeType == "Rectangle") {
+        shape = Rectangle::Create(shapeArgs);
+    } else if (shapeType == "Line") {
+        shape = Line::Create(shapeArgs);
+    } else if (shapeType == "Circle") {
+        shape = Circle::Create(shapeArgs);
+    } else if (shapeType == "Triangle") {
+        shape = Triangle::Create(shapeArgs);
     } else {
         std::cerr << "Invalid shape type or parameters" << std::endl;
+    }
+
+    if (shape) {
+        board.addShape(shape);
+    } else {
+        std::cerr << "Failed to create shape: some arguments are invalid" << std::endl;
     }
 }
 

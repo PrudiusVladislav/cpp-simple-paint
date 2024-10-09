@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include "Api.h"
+#include "ShapeFactory.h"
 
 int main() {
     Api api(80, 25);
@@ -25,6 +26,4 @@ int main() {
 
         api.runCommand(command, args);
     }
-
-    return 0;
 }

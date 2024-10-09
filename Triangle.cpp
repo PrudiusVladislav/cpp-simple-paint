@@ -41,3 +41,18 @@ void Triangle::deserialize(const std::string& data) {
     std::string type;
     iss >> type >> x >> y >> height;
 }
+
+Triangle * Triangle::CreateInternal(const std::vector<std::string> &args) {
+    if (args.size() != 3) {
+        return nullptr;
+    }
+
+    const int x = std::stoi(args[0]);
+    const int y = std::stoi(args[1]);
+    const int height = std::stoi(args[2]);
+    return new Triangle(x, y, height);
+}
+
+Triangle * Triangle::CreateEmptyInternal() {
+    return new Triangle(0, 0, 0);
+}

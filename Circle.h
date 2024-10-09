@@ -2,15 +2,17 @@
 #define CIRCLE_H
 
 #include "Shape.h"
+#include "ShapeFactory.h"
 
-class Circle : public Shape {
+class Circle : public ShapeFactory<Circle>, public Shape {
 public:
-    Circle(int centerX, int centerY, int radius);
     void draw(char** board, int boardWidth, int boardHeight) const override;
     std::string serialize() const override;
     void deserialize(const std::string& data) override;
-
+    static Circle* CreateInternal(const std::vector<std::string>& args);
+    static Circle* CreateEmptyInternal();
 private:
+    Circle(int centerX, int centerY, int radius);
     int centerX, centerY, radius;
 };
 

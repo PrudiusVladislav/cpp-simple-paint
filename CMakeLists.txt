@@ -16,4 +16,5 @@ add_executable(simple_paint main.cpp
         Triangle.cpp
         Triangle.h
         Api.cpp
-        Api.h)
+        Api.h
+        ShapeFactory.h)

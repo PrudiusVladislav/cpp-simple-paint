@@ -112,13 +112,13 @@ void Board::load(const std::string& filePath) {
 
         Shape* shape = nullptr;
         if (shapeType == "Rectangle") {
-            shape = new Rectangle(0, 0, 0, 0);
+            shape = Rectangle::CreateEmpty();
         } else if (shapeType == "Line") {
-            shape = new Line(0, 0, 0, 0);
+            shape = Line::CreateEmpty();
         } else if (shapeType == "Circle") {
-            shape = new Circle(0, 0, 0);
+            shape = Circle::CreateEmpty();
         } else if (shapeType == "Triangle") {
-            shape = new Triangle(0, 0, 0);
+            shape = Triangle::CreateEmpty();
         }
 
         if (shape) {

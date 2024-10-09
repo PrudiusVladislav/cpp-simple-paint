@@ -43,3 +43,19 @@ void Line::deserialize(const std::string& data) {
     std::string type;
     iss >> type >> x1 >> y1 >> x2 >> y2;
 }
+
+Line * Line::CreateInternal(const std::vector<std::string> &args) {
+    if (args.size() != 4) {
+        return nullptr;
+    }
+
+    const int x1 = std::stoi(args[0]);
+    const int y1 = std::stoi(args[1]);
+    const int x2 = std::stoi(args[2]);
+    const int y2 = std::stoi(args[3]);
+    return new Line(x1, y1, x2, y2);
+}
+
+Line * Line::CreateEmptyInternal() {
+    return new Line(0, 0, 0, 0);
+}
