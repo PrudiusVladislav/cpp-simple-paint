@@ -14,6 +14,10 @@ void Rectangle::draw(char** board, int boardWidth, int boardHeight) const {
     }
 }
 
+bool Rectangle::contains(int x, int y) const {
+    return x >= this->x && x <= this->x + width && y >= this->y && y <= this->y + height;
+}
+
 std::string Rectangle::serialize() const {
     std::ostringstream oss;
     oss << "Rectangle " << filled << ' ' << color << ' ' << x << ' ' << y << ' ' << width << ' ' << height;

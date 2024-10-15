@@ -7,6 +7,7 @@
 class Circle : public ShapeFactory<Circle>, public Shape {
 public:
     void draw(char** board, int boardWidth, int boardHeight) const override;
+    bool contains(int x, int y) const override;
     std::string serialize() const override;
     void deserialize(const std::string& data) override;
     static Circle* CreateInternal(const std::vector<std::string>& args);

@@ -32,6 +32,13 @@ void Line::draw(char** board, int boardWidth, int boardHeight) const {
     }
 }
 
+bool Line::contains(int x, int y) const {
+    double distance = std::abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1) /
+                      std::sqrt(std::pow(y2 - y1, 2) + std::pow(x2 - x1, 2));
+    const double tolerance = 0.5;
+    return distance <= tolerance;
+}
+
 std::string Line::serialize() const {
     std::ostringstream oss;
     oss << "Line " << filled << ' ' << color << ' ' << x1 << ' ' << y1 << ' ' << x2 << ' ' << y2;

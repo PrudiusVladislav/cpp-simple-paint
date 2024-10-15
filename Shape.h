@@ -10,6 +10,7 @@ public:
     virtual void draw(char** grid, int width, int height) const = 0;
     virtual std::string serialize() const = 0;
     virtual void deserialize(const std::string& data) = 0;
+    virtual bool contains(int x, int y) const = 0;
 protected:
     bool filled;
     char color;

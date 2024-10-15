@@ -18,6 +18,22 @@ void Triangle::draw(char** board, int boardWidth, int boardHeight) const {
     }
 }
 
+bool Triangle::contains(int x, int y) const {
+    int x1 = this->x;
+    int y1 = this->y;
+    int x2 = this->x - height + 1;
+    int y2 = this->y + height - 1;
+    int x3 = this->x + height - 1;
+    int y3 = this->y + height - 1;
+
+    int denominator = (y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3);
+    int a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / denominator;
+    int b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / denominator;
+    int c = 1 - a - b;
+
+    return a >= 0 && b >= 0 && c >= 0;
+}
+
 std::string Triangle::serialize() const {
     std::ostringstream oss;
     oss << "Triangle " << filled << ' ' << color << ' ' << x << ' ' << y << ' ' << height;

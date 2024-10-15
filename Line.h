@@ -7,6 +7,7 @@
 class Line : public ShapeFactory<Line>, public Shape {
 public:
     void draw(char** board, int boardWidth, int boardHeight) const override;
+    bool contains(int x, int y) const override;
     std::string serialize() const override;
     void deserialize(const std::string& data) override;
     static Line* CreateInternal(const std::vector<std::string>& args);

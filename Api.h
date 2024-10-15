@@ -21,6 +21,7 @@ private:
     void clear();
     void save(const std::string& filePath) const;
     void load(const std::string& filePath);
+    void select(const std::vector<std::string>& args);
 };
 
 #endif // API_H

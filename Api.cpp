@@ -25,7 +25,10 @@ void Api::runCommand(const std::string& command, const std::vector<std::string>&
         redo();
     } else if (command == "clear") {
         clear();
-    } else if (command == "save") {
+    } else if (command == "select") {
+        select(args);
+    }
+    else if (command == "save") {
         if (args.size() != 1) {
             std::cerr << "Invalid arguments for save command" << std::endl;
             return;
@@ -117,4 +120,16 @@ void Api::save(const std::string& filePath) const {
 
 void Api::load(const std::string& filePath) {
     board.load(filePath);
+}
+
+void Api::select(const std::vector<std::string>& args) {
+    if (args.size() != 2) {
+        std::cerr << "Invalid arguments for select command" << std::endl;
+        return;
+    }
+
+    int x = std::stoi(args[0]);
+    int y = std::stoi(args[1]);
+    board.select(x, y);
+    std::cout << "Selected shape: " << board.getSelected()->serialize() << std::endl;
 }

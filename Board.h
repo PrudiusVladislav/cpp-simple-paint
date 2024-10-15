@@ -15,6 +15,8 @@ public:
     void clear();
     void save(const std::string& filePath) const;
     void load(const std::string& filePath);
+    void select(int x, int y);
+    Shape* getSelected() const;
     const std::vector<const Shape*>& getShapes() const;
 
 private:
@@ -22,6 +24,7 @@ private:
     std::vector<const Shape*> shapes;
     std::vector<const Shape*> undoStack;
     char** grid;
+    const Shape* selected;
     void clearGrid() const;
     void drawBorder() const;
 };

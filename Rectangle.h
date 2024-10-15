@@ -12,6 +12,7 @@ class Rectangle :
     Rectangle(bool filled, char color, int x, int y, int width, int height);
 public:
     void draw(char** board, int boardWidth, int boardHeight) const override;
+    bool contains(int x, int y) const override;
     std::string serialize() const override;
     void deserialize(const std::string& data) override;
     static Rectangle* CreateInternal(const std::vector<std::string>& args);

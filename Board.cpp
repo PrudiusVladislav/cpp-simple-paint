@@ -1,6 +1,7 @@
 #include "Board.h"
 #include <iostream>
 #include <fstream>
+#include <ranges>
 #include <sstream>
 #include "Rectangle.h"
 #include "Line.h"
@@ -128,6 +129,20 @@ void Board::load(const std::string& filePath) {
     }
 
     inFile.close();
+}
+
+void Board::select(int x, int y) {
+    for (const auto & shape : std::ranges::reverse_view(shapes)) {
+        if (shape->contains(x, y)) {
+            selected = shape;
+            return;
+        }
+    }
+    selected = nullptr;
+}
+
+Shape * Board::getSelected() const {
+    return const_cast<Shape*>(selected);
 }
 
 const std::vector<const Shape*>& Board::getShapes() const {

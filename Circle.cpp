@@ -21,6 +21,12 @@ void Circle::draw(char** board, int boardWidth, int boardHeight) const {
     }
 }
 
+bool Circle::contains(int x, int y) const {
+    int dx = x - centerX;
+    int dy = y - centerY;
+    return (dx * dx + dy * dy <= radius * radius);
+}
+
 std::string Circle::serialize() const {
     std::ostringstream oss;
     oss << "Circle " << filled << ' ' << color << ' ' << centerX << ' ' << centerY << ' ' << radius;
