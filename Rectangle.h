@@ -9,7 +9,7 @@ class Rectangle :
     public ShapeFactory<Rectangle>,
     public Shape {
     int x, y, width, height;
-    Rectangle(int x, int y, int width, int height);
+    Rectangle(bool filled, char color, int x, int y, int width, int height);
 public:
     void draw(char** board, int boardWidth, int boardHeight) const override;
     std::string serialize() const override;

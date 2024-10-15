@@ -12,7 +12,7 @@ public:
     static Circle* CreateInternal(const std::vector<std::string>& args);
     static Circle* CreateEmptyInternal();
 private:
-    Circle(int centerX, int centerY, int radius);
+    Circle(bool filled, char color, int centerX, int centerY, int radius);
     int centerX, centerY, radius;
 };
 

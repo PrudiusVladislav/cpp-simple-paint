@@ -12,7 +12,7 @@ public:
     static Triangle* CreateInternal(const std::vector<std::string>& args);
     static Triangle* CreateEmptyInternal();
 private:
-    Triangle(int x, int y, int height);
+    Triangle(bool filled, char color, int x, int y, int height);
     int x, y, height;
 };
 

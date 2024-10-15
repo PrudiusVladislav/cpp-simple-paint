@@ -1,58 +1,48 @@
 #include "Triangle.h"
 #include <sstream>
 
-Triangle::Triangle(int x, int y, int height)
-    : x(x), y(y), height(height) {}
+Triangle::Triangle(bool filled, char color, int x, int y, int height)
+    : Shape(filled, color), x(x), y(y), height(height) {}
 
 void Triangle::draw(char** board, int boardWidth, int boardHeight) const {
-    for (int i = 0; i < height; ++i) {
-        int leftMost = x - i;
-        int rightMost = x + i;
-        int posY = y + i;
-
-        if (posY >= 0 && posY < boardHeight) {
-            if (leftMost >= 0 && leftMost < boardWidth) {
-                board[posY][leftMost] = '*';
+    int baseY = y + height;
+    for (int i = y; i <= baseY && i < boardHeight; ++i) {
+        int rowHeight = i - y;
+        int startX = x - rowHeight;
+        int endX = x + rowHeight;
+        for (int j = startX; j <= endX && j < boardWidth; ++j) {
+            if (filled || i == baseY || j == startX || j == endX) {
+                board[i][j] = color;
             }
-            if (rightMost >= 0 && rightMost < boardWidth && leftMost != rightMost) {
-                board[posY][rightMost] = '*';
-            }
-        }
-    }
-
-    for (int j = 0; j < 2 * height - 1; ++j) {
-        int baseX = x - height + 1 + j;
-        int baseY = y + height - 1;
-
-        if (baseX >= 0 && baseX < boardWidth && baseY < boardHeight) {
-            board[baseY][baseX] = '*';
         }
     }
 }
 
 std::string Triangle::serialize() const {
     std::ostringstream oss;
-    oss << "Triangle " << x << " " << y << " " << height;
+    oss << "Triangle " << filled << ' ' << color << ' ' << x << ' ' << y << ' ' << height;
     return oss.str();
 }
 
 void Triangle::deserialize(const std::string& data) {
     std::istringstream iss(data);
     std::string type;
-    iss >> type >> x >> y >> height;
+    iss >> type >> filled >> color >> x >> y >> height;
 }
 
-Triangle * Triangle::CreateInternal(const std::vector<std::string> &args) {
-    if (args.size() != 3) {
+Triangle* Triangle::CreateInternal(const std::vector<std::string>& args) {
+    if (args.size() != 5) {
         return nullptr;
     }
 
-    const int x = std::stoi(args[0]);
-    const int y = std::stoi(args[1]);
-    const int height = std::stoi(args[2]);
-    return new Triangle(x, y, height);
+    const bool filled = args[0] == "fill";
+    const char color = args[1][0];
+    const int x = std::stoi(args[2]);
+    const int y = std::stoi(args[3]);
+    const int height = std::stoi(args[4]);
+    return new Triangle(filled, color, x, y, height);
 }
 
 Triangle * Triangle::CreateEmptyInternal() {
-    return new Triangle(0, 0, 0);
+    return new Triangle(false, 'b', 0, 0, 0);
 }

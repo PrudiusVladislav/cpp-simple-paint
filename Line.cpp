@@ -2,8 +2,8 @@
 #include <sstream>
 #include <cmath>
 
-Line::Line(int x1, int y1, int x2, int y2)
-    : x1(x1), y1(y1), x2(x2), y2(y2) {}
+Line::Line(bool filled, char color, int x1, int y1, int x2, int y2)
+    : Shape(filled, color), x1(x1), y1(y1), x2(x2), y2(y2) {}
 
 void Line::draw(char** board, int boardWidth, int boardHeight) const {
     int dx = std::abs(x2 - x1);
@@ -17,7 +17,7 @@ void Line::draw(char** board, int boardWidth, int boardHeight) const {
 
     while (true) {
         if (x >= 0 && x < boardWidth && y >= 0 && y < boardHeight) {
-            board[y][x] = '*';
+            board[y][x] = color;
         }
         if (x == x2 && y == y2) break;
         int e2 = err * 2;
@@ -34,28 +34,30 @@ void Line::draw(char** board, int boardWidth, int boardHeight) const {
 
 std::string Line::serialize() const {
     std::ostringstream oss;
-    oss << "Line " << x1 << " " << y1 << " " << x2 << " " << y2;
+    oss << "Line " << filled << ' ' << color << ' ' << x1 << ' ' << y1 << ' ' << x2 << ' ' << y2;
     return oss.str();
 }
 
 void Line::deserialize(const std::string& data) {
     std::istringstream iss(data);
     std::string type;
-    iss >> type >> x1 >> y1 >> x2 >> y2;
+    iss >> type >> filled >> color >> x1 >> y1 >> x2 >> y2;
 }
 
-Line * Line::CreateInternal(const std::vector<std::string> &args) {
-    if (args.size() != 4) {
+Line* Line::CreateInternal(const std::vector<std::string>& args) {
+    if (args.size() != 5) {
         return nullptr;
     }
 
-    const int x1 = std::stoi(args[0]);
-    const int y1 = std::stoi(args[1]);
-    const int x2 = std::stoi(args[2]);
-    const int y2 = std::stoi(args[3]);
-    return new Line(x1, y1, x2, y2);
+    const bool filled = true;
+    const char color = args[0][0];
+    const int x1 = std::stoi(args[1]);
+    const int y1 = std::stoi(args[2]);
+    const int x2 = std::stoi(args[3]);
+    const int y2 = std::stoi(args[4]);
+    return new Line(filled, color, x1, y1, x2, y2);
 }
 
-Line * Line::CreateEmptyInternal() {
-    return new Line(0, 0, 0, 0);
+Line* Line::CreateEmptyInternal() {
+    return new Line(true, 'b', 0, 0, 0, 0);
 }

@@ -12,7 +12,7 @@ public:
     static Line* CreateInternal(const std::vector<std::string>& args);
     static Line* CreateEmptyInternal();
 private:
-    Line(int x1, int y1, int x2, int y2);
+    Line(bool filled, char color, int x1, int y1, int x2, int y2);
     int x1, y1, x2, y2;
 };
 
