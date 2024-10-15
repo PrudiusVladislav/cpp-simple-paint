@@ -36,7 +36,11 @@ bool Line::contains(int x, int y) const {
     double distance = std::abs((y2 - y1) * x - (x2 - x1) * y + x2 * y1 - y2 * x1) /
                       std::sqrt(std::pow(y2 - y1, 2) + std::pow(x2 - x1, 2));
     const double tolerance = 0.5;
-    return distance <= tolerance;
+
+    bool withinBoundingBox = (x >= std::min(x1, x2) && x <= std::max(x1, x2) &&
+                              y >= std::min(y1, y2) && y <= std::max(y1, y2));
+
+    return distance <= tolerance && withinBoundingBox;
 }
 
 std::string Line::serialize() const {
@@ -67,4 +71,30 @@ Line* Line::CreateInternal(const std::vector<std::string>& args) {
 
 Line* Line::CreateEmptyInternal() {
     return new Line(true, 'b', 0, 0, 0, 0);
+}
+
+bool Line::edit(const std::vector<std::string> &params) {
+    if (params.size() != 5) {
+        return false;
+    }
+
+    color = params[0][0];
+    x1 = std::stoi(params[1]);
+    y1 = std::stoi(params[2]);
+    x2 = std::stoi(params[3]);
+    y2 = std::stoi(params[4]);
+    return true;
+}
+
+void Line::setColor(const std::string &color) {
+    if (!color.empty()) {
+        this->color = color[0];
+    }
+}
+
+void Line::move(int x, int y) {
+    x1 += x;
+    y1 += y;
+    x2 += x;
+    y2 += y;
 }

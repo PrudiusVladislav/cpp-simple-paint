@@ -29,10 +29,39 @@ void Board::addShape(const Shape* shape) {
     undoStack.clear(); // Clear the undo stack when a new shape is added
 }
 
+bool Board::editSelectedShape(const std::vector<std::string>& params) {
+    if (selected) {
+        return selected->edit(params);
+    }
+    return false;
+}
+
+void Board::paintSelectedShape(const std::string& color) {
+    if (selected) {
+        selected->setColor(color);
+    }
+}
+
+void Board::moveSelectedShape(int x, int y) {
+    if (selected) {
+        selected->move(x, y);
+    }
+}
+
 void Board::removeLastShape() {
     if (!shapes.empty()) {
         undoStack.push_back(shapes.back());
         shapes.pop_back();
+    }
+}
+
+void Board::removeSelectedShape() {
+    if (selected) {
+        const auto it = std::ranges::find(shapes, selected);
+        if (it != shapes.end()) {
+            shapes.erase(it);
+            selected = nullptr;
+        }
     }
 }
 
@@ -134,7 +163,7 @@ void Board::load(const std::string& filePath) {
 void Board::select(int x, int y) {
     for (const auto & shape : std::ranges::reverse_view(shapes)) {
         if (shape->contains(x, y)) {
-            selected = shape;
+            selected = const_cast<Shape*>(shape);
             return;
         }
     }
@@ -142,7 +171,7 @@ void Board::select(int x, int y) {
 }
 
 Shape * Board::getSelected() const {
-    return const_cast<Shape*>(selected);
+    return selected;
 }
 
 const std::vector<const Shape*>& Board::getShapes() const {

@@ -12,6 +12,9 @@ public:
     void deserialize(const std::string& data) override;
     static Circle* CreateInternal(const std::vector<std::string>& args);
     static Circle* CreateEmptyInternal();
+    bool edit(const std::vector<std::string>& params) override;
+    void setColor(const std::string& color) override;
+    void move(int x, int y) override;
 private:
     Circle(bool filled, char color, int centerX, int centerY, int radius);
     int centerX, centerY, radius;

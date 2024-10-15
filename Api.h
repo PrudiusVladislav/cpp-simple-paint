@@ -22,6 +22,11 @@ private:
     void save(const std::string& filePath) const;
     void load(const std::string& filePath);
     void select(const std::vector<std::string>& args);
+    void showSelected() const;
+    void edit(const std::vector<std::string>& args);
+    void paint(const std::vector<std::string>& args);
+    void move(const std::vector<std::string>& args);
+    void remove();
 };
 
 #endif // API_H

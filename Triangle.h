@@ -12,6 +12,9 @@ public:
     void deserialize(const std::string& data) override;
     static Triangle* CreateInternal(const std::vector<std::string>& args);
     static Triangle* CreateEmptyInternal();
+    bool edit(const std::vector<std::string>& params) override;
+    void setColor(const std::string& color) override;
+    void move(int x, int y) override;
 private:
     Triangle(bool filled, char color, int x, int y, int height);
     int x, y, height;

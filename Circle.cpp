@@ -55,3 +55,28 @@ Circle* Circle::CreateInternal(const std::vector<std::string>& args) {
 Circle* Circle::CreateEmptyInternal() {
     return new Circle(false, 'b', 0, 0, 0);
 }
+
+bool Circle::edit(const std::vector<std::string> &params) {
+    if (params.size() != 5) {
+        return false;
+    }
+
+    filled = params[0] == "fill";
+    color = params[1][0];
+    centerX = std::stoi(params[2]);
+    centerY = std::stoi(params[3]);
+    radius = std::stoi(params[4]);
+    return true;
+}
+
+void Circle::setColor(const std::string &color) {
+    if (color.empty()) {
+        return;
+    }
+    this->color = color[0];
+}
+
+void Circle::move(int x, int y) {
+    centerX += x;
+    centerY += y;
+}

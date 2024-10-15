@@ -10,7 +10,11 @@ public:
     Board(int width, int height);
     ~Board();
     void addShape(const Shape* shape);
+    bool editSelectedShape(const std::vector<std::string>& params);
+    void paintSelectedShape(const std::string& color);
+    void moveSelectedShape(int x, int y);
     void removeLastShape();
+    void removeSelectedShape();
     void draw() const;
     void clear();
     void save(const std::string& filePath) const;
@@ -24,7 +28,7 @@ private:
     std::vector<const Shape*> shapes;
     std::vector<const Shape*> undoStack;
     char** grid;
-    const Shape* selected;
+    Shape* selected;
     void clearGrid() const;
     void drawBorder() const;
 };

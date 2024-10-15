@@ -17,6 +17,9 @@ public:
     void deserialize(const std::string& data) override;
     static Rectangle* CreateInternal(const std::vector<std::string>& args);
     static Rectangle* CreateEmptyInternal();
+    bool edit(const std::vector<std::string>& params) override;
+    void setColor(const std::string& color) override;
+    void move(int x, int y) override;
 };
 
 #endif // RECTANGLE_H

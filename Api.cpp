@@ -27,8 +27,17 @@ void Api::runCommand(const std::string& command, const std::vector<std::string>&
         clear();
     } else if (command == "select") {
         select(args);
-    }
-    else if (command == "save") {
+    } else if (command == "selected") {
+        showSelected();
+    } else if (command == "edit") {
+        edit(args);
+    } else if (command == "paint") {
+        paint(args);
+    } else if (command == "move") {
+        move(args);
+    } else if (command == "remove") {
+        remove();
+    } else if (command == "save") {
         if (args.size() != 1) {
             std::cerr << "Invalid arguments for save command" << std::endl;
             return;
@@ -131,5 +140,61 @@ void Api::select(const std::vector<std::string>& args) {
     int x = std::stoi(args[0]);
     int y = std::stoi(args[1]);
     board.select(x, y);
-    std::cout << "Selected shape: " << board.getSelected()->serialize() << std::endl;
+
+    const Shape* selectedShape = board.getSelected();
+    if (selectedShape) {
+        std::cout << "Selected shape: " << selectedShape->serialize() << std::endl;
+    } else {
+        std::cout << "No shape selected at the given coordinates." << std::endl;
+    }
+}
+
+void Api::showSelected() const {
+    const Shape* selectedShape = board.getSelected();
+    if (selectedShape) {
+        std::cout << "Selected shape: " << selectedShape->serialize() << std::endl;
+    } else {
+        std::cout << "No shape selected." << std::endl;
+    }
+}
+
+void Api::edit(const std::vector<std::string>& args) {
+    if (args.empty()) {
+        std::cerr << "Invalid arguments for edit command" << std::endl;
+        return;
+    }
+
+    if (board.editSelectedShape(args)) {
+        std::cout << "Shape edited successfully." << std::endl;
+    } else {
+        std::cerr << "Failed to edit shape: some arguments are invalid." << std::endl;
+    }
+}
+
+void Api::paint(const std::vector<std::string>& args) {
+    if (args.size() != 1) {
+        std::cerr << "Invalid arguments for paint command" << std::endl;
+        return;
+    }
+
+    const std::string& color = args[0];
+    board.paintSelectedShape(color);
+    std::cout << "Shape painted successfully." << std::endl;
+}
+
+void Api::move(const std::vector<std::string>& args) {
+    if (args.size() != 2) {
+        std::cerr << "Invalid arguments for move command" << std::endl;
+        return;
+    }
+
+    int x = std::stoi(args[0]);
+    int y = std::stoi(args[1]);
+    board.moveSelectedShape(x, y);
+    std::cout << "Shape moved successfully." << std::endl;
+}
+
+void Api::remove() {
+    board.removeSelectedShape();
+    std::cout << "Shape removed successfully." << std::endl;
 }

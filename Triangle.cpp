@@ -62,3 +62,27 @@ Triangle* Triangle::CreateInternal(const std::vector<std::string>& args) {
 Triangle * Triangle::CreateEmptyInternal() {
     return new Triangle(false, 'b', 0, 0, 0);
 }
+
+bool Triangle::edit(const std::vector<std::string> &params) {
+    if (params.size() != 5) {
+        return false;
+    }
+
+    filled = params[0] == "fill";
+    color = params[1][0];
+    x = std::stoi(params[2]);
+    y = std::stoi(params[3]);
+    height = std::stoi(params[4]);
+    return true;
+}
+
+void Triangle::setColor(const std::string &color) {
+    if (!color.empty()) {
+        this->color = color[0];
+    }
+}
+
+void Triangle::move(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
